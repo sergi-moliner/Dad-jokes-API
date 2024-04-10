@@ -3,9 +3,20 @@ interface JokeObj {
     joke: string;
     status: number;
 }
+interface JokeReview {
+    joke: string;
+    score: number;
+    date: string;
+}
 
 //buttons
 const nextJokeButton = document.getElementById('next-joke');
+const BtnLike = document.getElementById('emoji-like');
+const BtnOk = document.getElementById('emoji-ok');
+const BtnDislike = document.getElementById('emoji-dislike');
+
+//Array of reports
+let reportAcudits : JokeReview[] = [];
 
 const jokeElement = document.getElementById('joke');
 
@@ -36,3 +47,39 @@ if (nextJokeButton) {
 }
 
 showJoke();
+
+//reviews
+if (BtnLike) {
+    BtnLike.addEventListener('click', () => {
+        addJokeReview(3);
+    });
+}
+if (BtnOk) {
+    BtnOk.addEventListener('click', () => {
+        addJokeReview(2);
+    });
+}
+if (BtnDislike) {
+    BtnDislike.addEventListener('click', () => {
+        addJokeReview(1);
+    });
+}
+
+function addJokeReview(score: number){
+    const jokeToReview : string = jokeElement?.textContent ?? '';
+    const existingReview = reportAcudits.findIndex(review => review.joke === jokeToReview);
+    if(existingReview != -1){
+        reportAcudits[existingReview].score = score;
+        reportAcudits[existingReview].date = new Date().toISOString();
+        console.log("La valoracio s'ha modificat:", reportAcudits);
+    }
+    else{
+        const review : JokeReview = {
+            joke: jokeToReview,
+            score: score,
+            date: new Date().toISOString()
+        };
+        reportAcudits.push(review);
+        console.log("S'ha afegit una nova valoració:", reportAcudits);
+    }
+}

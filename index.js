@@ -35,14 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 //buttons
+var nextJokeButton = document.getElementById('next-joke');
 var BtnLike = document.getElementById('emoji-like');
 var BtnOk = document.getElementById('emoji-ok');
 var BtnDislike = document.getElementById('emoji-dislike');
-var nextJokeButton = document.getElementById('next-joke');
-//DOM elements
-var jokeElement = document.getElementById('joke');
 //Array of reports
 var reportAcudits = [];
+var jokeElement = document.getElementById('joke');
 function getJoke() {
     return __awaiter(this, void 0, void 0, function () {
         var response, data, error_1;
@@ -90,6 +89,7 @@ function showJoke() {
 if (nextJokeButton) {
     nextJokeButton.addEventListener('click', showJoke);
 }
+showJoke();
 //reviews
 if (BtnLike) {
     BtnLike.addEventListener('click', function () {
@@ -125,4 +125,3 @@ function addJokeReview(score) {
         console.log("S'ha afegit una nova valoració:", reportAcudits);
     }
 }
-showJoke();
