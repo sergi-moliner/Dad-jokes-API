@@ -1,8 +1,3 @@
-interface JokeObj {
-    id: string;
-    joke: string;
-    status: number;
-}
 interface JokeReview {
     joke: string;
     score: number;
@@ -22,25 +17,40 @@ let reportAcudits : JokeReview[] = [];
 const jokeElement = document.getElementById('joke');
 const weatherElement = document.getElementById('weather-info');
 
-async function getJoke() {
+async function getDadJoke() {
     try {
         const response = await fetch('https://icanhazdadjoke.com/', {
             headers: {
                 'Accept': 'application/json'
             }
         });
-        const data = await response.json() as JokeObj;
+        const data = await response.json();
         return data.joke;
     } catch (error) {
-        console.error('Error getting joke', error);
-        return 'Error getting joke';
+        console.error('Error getting dad joke', error);
+        return 'Error getting dad joke';
+    }
+}
+
+async function getChuckJoke() {
+    try {
+        const response = await fetch('https://api.chucknorris.io/jokes/random', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const data = await response.json();
+        return data.value;
+    } catch (error) {
+        console.error('Error getting Chuck joke', error);
+        return 'Error getting Chuck joke';
     }
 }
 
 async function showJoke() {
     if (jokeElement) {
-        const joke = await getJoke();
-        jokeElement.innerHTML = joke;
+        const random = Math.floor(Math.random() * 2);
+        jokeElement.innerHTML = random === 0 ? await getDadJoke() : await getChuckJoke();
     }
 }
 
@@ -89,7 +99,11 @@ function addJokeReview(score: number){
 //weather info
 async function getWeather() {
     try {
-        const response = await fetch('http://api.weatherapi.com/v1/current.json?key=7000b05aaa4a49f2911110936240904&q=Barcelona&aqi=no');
+        const response = await fetch('http://api.weatherapi.com/v1/current.json?key=7000b05aaa4a49f2911110936240904&q=Barcelona&aqi=no', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
         const data = await response.json();
         const weatherTemp = data.current.temp_c;
         const weatherIcon = data.current.condition.icon;

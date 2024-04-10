@@ -44,7 +44,7 @@ var reportAcudits = [];
 //DOM elements
 var jokeElement = document.getElementById('joke');
 var weatherElement = document.getElementById('weather-info');
-function getJoke() {
+function getDadJoke() {
     return __awaiter(this, void 0, void 0, function () {
         var response, data, error_1;
         return __generator(this, function (_a) {
@@ -64,8 +64,35 @@ function getJoke() {
                     return [2 /*return*/, data.joke];
                 case 3:
                     error_1 = _a.sent();
-                    console.error('Error getting joke', error_1);
-                    return [2 /*return*/, 'Error getting joke'];
+                    console.error('Error getting dad joke', error_1);
+                    return [2 /*return*/, 'Error getting dad joke'];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+function getChuckJoke() {
+    return __awaiter(this, void 0, void 0, function () {
+        var response, data, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 3, , 4]);
+                    return [4 /*yield*/, fetch('https://api.chucknorris.io/jokes/random', {
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        })];
+                case 1:
+                    response = _a.sent();
+                    return [4 /*yield*/, response.json()];
+                case 2:
+                    data = _a.sent();
+                    return [2 /*return*/, data.value];
+                case 3:
+                    error_2 = _a.sent();
+                    console.error('Error getting Chuck joke', error_2);
+                    return [2 /*return*/, 'Error getting Chuck joke'];
                 case 4: return [2 /*return*/];
             }
         });
@@ -73,17 +100,26 @@ function getJoke() {
 }
 function showJoke() {
     return __awaiter(this, void 0, void 0, function () {
-        var joke;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var random, _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    if (!jokeElement) return [3 /*break*/, 2];
-                    return [4 /*yield*/, getJoke()];
+                    if (!jokeElement) return [3 /*break*/, 5];
+                    random = Math.floor(Math.random() * 2);
+                    _a = jokeElement;
+                    if (!(random === 0)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, getDadJoke()];
                 case 1:
-                    joke = _a.sent();
-                    jokeElement.innerHTML = joke;
-                    _a.label = 2;
-                case 2: return [2 /*return*/];
+                    _b = _c.sent();
+                    return [3 /*break*/, 4];
+                case 2: return [4 /*yield*/, getChuckJoke()];
+                case 3:
+                    _b = _c.sent();
+                    _c.label = 4;
+                case 4:
+                    _a.innerHTML = _b;
+                    _c.label = 5;
+                case 5: return [2 /*return*/];
             }
         });
     });
@@ -130,12 +166,16 @@ function addJokeReview(score) {
 //weather info
 function getWeather() {
     return __awaiter(this, void 0, void 0, function () {
-        var response, data, weatherTemp, weatherIcon, error_2;
+        var response, data, weatherTemp, weatherIcon, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, fetch('http://api.weatherapi.com/v1/current.json?key=7000b05aaa4a49f2911110936240904&q=Barcelona&aqi=no')];
+                    return [4 /*yield*/, fetch('http://api.weatherapi.com/v1/current.json?key=7000b05aaa4a49f2911110936240904&q=Barcelona&aqi=no', {
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        })];
                 case 1:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
@@ -145,8 +185,8 @@ function getWeather() {
                     weatherIcon = data.current.condition.icon;
                     return [2 /*return*/, { temp: weatherTemp, icon: weatherIcon }];
                 case 3:
-                    error_2 = _a.sent();
-                    console.error('Error getting weather', error_2);
+                    error_3 = _a.sent();
+                    console.error('Error getting weather', error_3);
                     return [2 /*return*/, 'Error getting weather'];
                 case 4: return [2 /*return*/];
             }
