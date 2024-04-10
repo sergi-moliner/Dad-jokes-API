@@ -34,6 +34,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+//buttons
+var BtnLike = document.getElementById('emoji-like');
+var BtnOk = document.getElementById('emoji-ok');
+var BtnDislike = document.getElementById('emoji-dislike');
+var nextJokeButton = document.getElementById('next-joke');
+//DOM elements
+var jokeElement = document.getElementById('joke');
+//Array of reports
+var reportAcudits = [];
 function getJoke() {
     return __awaiter(this, void 0, void 0, function () {
         var response, data, error_1;
@@ -63,11 +72,10 @@ function getJoke() {
 }
 function showJoke() {
     return __awaiter(this, void 0, void 0, function () {
-        var jokeElement, joke;
+        var joke;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    jokeElement = document.getElementById('joke');
                     if (!jokeElement) return [3 /*break*/, 2];
                     return [4 /*yield*/, getJoke()];
                 case 1:
@@ -79,8 +87,42 @@ function showJoke() {
         });
     });
 }
-var nextJokeButton = document.getElementById('next-joke');
 if (nextJokeButton) {
     nextJokeButton.addEventListener('click', showJoke);
+}
+//reviews
+if (BtnLike) {
+    BtnLike.addEventListener('click', function () {
+        addJokeReview(3);
+    });
+}
+if (BtnOk) {
+    BtnOk.addEventListener('click', function () {
+        addJokeReview(2);
+    });
+}
+if (BtnDislike) {
+    BtnDislike.addEventListener('click', function () {
+        addJokeReview(1);
+    });
+}
+function addJokeReview(score) {
+    var _a;
+    var jokeToReview = (_a = jokeElement === null || jokeElement === void 0 ? void 0 : jokeElement.textContent) !== null && _a !== void 0 ? _a : '';
+    var existingReview = reportAcudits.findIndex(function (review) { return review.joke === jokeToReview; });
+    if (existingReview != -1) {
+        reportAcudits[existingReview].score = score;
+        reportAcudits[existingReview].date = new Date().toISOString();
+        console.log("La valoracio s'ha modificat:", reportAcudits);
+    }
+    else {
+        var review = {
+            joke: jokeToReview,
+            score: score,
+            date: new Date().toISOString()
+        };
+        reportAcudits.push(review);
+        console.log("S'ha afegit una nova valoració:", reportAcudits);
+    }
 }
 showJoke();

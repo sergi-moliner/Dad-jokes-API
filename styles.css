@@ -1,0 +1,24 @@
+body {
+    background-image: url('/img/matheus-ferrero-TkrRvwxjb_8-unsplash.jpg');
+    background-color: rgba(255, 255, 255, 0.5);
+    background-blend-mode: overlay;
+    background-size: cover;
+}
+
+.custom-container {
+    width: 800px;
+    background-color: white;
+}
+/*ex3*/
+.emoji-btn {
+    font-size: 33px;
+    padding: 10px;
+    margin-right: 10px;
+    border: none;
+    background-color: transparent;
+}
+  
+.emoji-button:hover {
+    transform: scale(2.1);
+}
+  

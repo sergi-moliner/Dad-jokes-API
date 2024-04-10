@@ -4,6 +4,11 @@ interface JokeObj {
     status: number;
 }
 
+//buttons
+const nextJokeButton = document.getElementById('next-joke');
+
+const jokeElement = document.getElementById('joke');
+
 async function getJoke() {
     try {
         const response = await fetch('https://icanhazdadjoke.com/', {
@@ -20,14 +25,12 @@ async function getJoke() {
 }
 
 async function showJoke() {
-    const jokeElement = document.getElementById('joke');
     if (jokeElement) {
         const joke = await getJoke();
         jokeElement.innerHTML = joke;
     }
 }
 
-const nextJokeButton = document.getElementById('next-joke');
 if (nextJokeButton) {
     nextJokeButton.addEventListener('click', showJoke);
 }
