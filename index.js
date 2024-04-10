@@ -41,7 +41,9 @@ var BtnOk = document.getElementById('emoji-ok');
 var BtnDislike = document.getElementById('emoji-dislike');
 //Array of reports
 var reportAcudits = [];
+//DOM elements
 var jokeElement = document.getElementById('joke');
+var weatherElement = document.getElementById('weather-info');
 function getJoke() {
     return __awaiter(this, void 0, void 0, function () {
         var response, data, error_1;
@@ -125,3 +127,51 @@ function addJokeReview(score) {
         console.log("S'ha afegit una nova valoració:", reportAcudits);
     }
 }
+//weather info
+function getWeather() {
+    return __awaiter(this, void 0, void 0, function () {
+        var response, data, weatherTemp, weatherIcon, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 3, , 4]);
+                    return [4 /*yield*/, fetch('http://api.weatherapi.com/v1/current.json?key=7000b05aaa4a49f2911110936240904&q=Barcelona&aqi=no')];
+                case 1:
+                    response = _a.sent();
+                    return [4 /*yield*/, response.json()];
+                case 2:
+                    data = _a.sent();
+                    weatherTemp = data.current.temp_c;
+                    weatherIcon = data.current.condition.icon;
+                    return [2 /*return*/, { temp: weatherTemp, icon: weatherIcon }];
+                case 3:
+                    error_2 = _a.sent();
+                    console.error('Error getting weather', error_2);
+                    return [2 /*return*/, 'Error getting weather'];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+function showWeather() {
+    return __awaiter(this, void 0, void 0, function () {
+        var weather;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, getWeather()];
+                case 1:
+                    weather = _a.sent();
+                    if (weatherElement) {
+                        if (typeof weather !== 'string') {
+                            weatherElement.innerHTML = "<img src=\"https:".concat(weather.icon, "\" alt=\"").concat(weather.temp, "\">| ").concat(weather.temp, " \u00B0C");
+                        }
+                        else {
+                            weatherElement.innerHTML = weather;
+                        }
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+showWeather();

@@ -18,7 +18,9 @@ const BtnDislike = document.getElementById('emoji-dislike');
 //Array of reports
 let reportAcudits : JokeReview[] = [];
 
+//DOM elements
 const jokeElement = document.getElementById('joke');
+const weatherElement = document.getElementById('weather-info');
 
 async function getJoke() {
     try {
@@ -83,3 +85,30 @@ function addJokeReview(score: number){
         console.log("S'ha afegit una nova valoració:", reportAcudits);
     }
 }
+
+//weather info
+async function getWeather() {
+    try {
+        const response = await fetch('http://api.weatherapi.com/v1/current.json?key=7000b05aaa4a49f2911110936240904&q=Barcelona&aqi=no');
+        const data = await response.json();
+        const weatherTemp = data.current.temp_c;
+        const weatherIcon = data.current.condition.icon;
+        return { temp: weatherTemp, icon: weatherIcon };
+    } catch (error) {
+        console.error('Error getting weather', error);
+        return 'Error getting weather';
+    }
+}
+
+async function showWeather() {
+    const weather = await getWeather();
+    if (weatherElement) {
+        if (typeof weather !== 'string') {
+            weatherElement.innerHTML = `<img src="https:${weather.icon}" alt="${weather.temp}">| ${weather.temp} °C`;
+        } else {
+            weatherElement.innerHTML = weather;
+        }
+    }
+}
+
+showWeather()
