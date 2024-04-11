@@ -40,7 +40,7 @@ var BtnLike = document.getElementById('emoji-like');
 var BtnOk = document.getElementById('emoji-ok');
 var BtnDislike = document.getElementById('emoji-dislike');
 //Array of reports
-var reportAcudits = [];
+var reportJokes = [];
 //DOM elements
 var jokeElement = document.getElementById('joke');
 var weatherElement = document.getElementById('weather-info');
@@ -126,6 +126,7 @@ function showJoke() {
 }
 if (nextJokeButton) {
     nextJokeButton.addEventListener('click', showJoke);
+    nextJokeButton.addEventListener('click', changeBackground);
 }
 showJoke();
 //reviews
@@ -145,13 +146,12 @@ if (BtnDislike) {
     });
 }
 function addJokeReview(score) {
-    var _a;
-    var jokeToReview = (_a = jokeElement === null || jokeElement === void 0 ? void 0 : jokeElement.textContent) !== null && _a !== void 0 ? _a : '';
-    var existingReview = reportAcudits.findIndex(function (review) { return review.joke === jokeToReview; });
+    var jokeToReview = (jokeElement && jokeElement.textContent) || '';
+    var existingReview = reportJokes.findIndex(function (review) { return review.joke === jokeToReview; });
     if (existingReview != -1) {
-        reportAcudits[existingReview].score = score;
-        reportAcudits[existingReview].date = new Date().toISOString();
-        console.log("La valoracio s'ha modificat:", reportAcudits);
+        reportJokes[existingReview].score = score;
+        reportJokes[existingReview].date = new Date().toISOString();
+        console.log("La valoracio s'ha modificat:", reportJokes);
     }
     else {
         var review = {
@@ -159,8 +159,8 @@ function addJokeReview(score) {
             score: score,
             date: new Date().toISOString()
         };
-        reportAcudits.push(review);
-        console.log("S'ha afegit una nova valoració:", reportAcudits);
+        reportJokes.push(review);
+        console.log("S'ha afegit una nova valoració:", reportJokes);
     }
 }
 //weather info
@@ -215,3 +215,14 @@ function showWeather() {
     });
 }
 showWeather();
+//background
+var backSVGs = ['back1.svg', 'back2.svg', 'back3.svg', 'back4.svg', 'back5.svg', 'back6.svg'];
+var i = 0;
+function changeBackground() {
+    var currentBackSVG = backSVGs[i];
+    document.body.style.backgroundImage = "url('/svg/".concat(currentBackSVG, "')");
+    i++;
+    if (i >= backSVGs.length) {
+        i = 0;
+    }
+}

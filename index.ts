@@ -11,7 +11,7 @@ const BtnOk = document.getElementById('emoji-ok');
 const BtnDislike = document.getElementById('emoji-dislike');
 
 //Array of reports
-let reportAcudits : JokeReview[] = [];
+let reportJokes : JokeReview[] = [];
 
 //DOM elements
 const jokeElement = document.getElementById('joke');
@@ -56,6 +56,7 @@ async function showJoke() {
 
 if (nextJokeButton) {
     nextJokeButton.addEventListener('click', showJoke);
+    nextJokeButton.addEventListener('click', changeBackground);
 }
 
 showJoke();
@@ -78,12 +79,12 @@ if (BtnDislike) {
 }
 
 function addJokeReview(score: number){
-    const jokeToReview : string = jokeElement?.textContent ?? '';
-    const existingReview = reportAcudits.findIndex(review => review.joke === jokeToReview);
+    let jokeToReview: string = (jokeElement && jokeElement.textContent) || '';
+    const existingReview = reportJokes.findIndex(review => review.joke === jokeToReview);
     if(existingReview != -1){
-        reportAcudits[existingReview].score = score;
-        reportAcudits[existingReview].date = new Date().toISOString();
-        console.log("La valoracio s'ha modificat:", reportAcudits);
+        reportJokes[existingReview].score = score;
+        reportJokes[existingReview].date = new Date().toISOString();
+        console.log("La valoracio s'ha modificat:", reportJokes);
     }
     else{
         const review : JokeReview = {
@@ -91,8 +92,8 @@ function addJokeReview(score: number){
             score: score,
             date: new Date().toISOString()
         };
-        reportAcudits.push(review);
-        console.log("S'ha afegit una nova valoració:", reportAcudits);
+        reportJokes.push(review);
+        console.log("S'ha afegit una nova valoració:", reportJokes);
     }
 }
 
@@ -126,3 +127,16 @@ async function showWeather() {
 }
 
 showWeather()
+
+//background
+const backSVGs = ['back1.svg', 'back2.svg', 'back3.svg', 'back4.svg', 'back5.svg', 'back6.svg'];
+let i = 0;
+
+function changeBackground() {
+    const currentBackSVG = backSVGs[i];
+    document.body.style.backgroundImage = `url('/svg/${currentBackSVG}')`;
+    i++;
+    if (i >= backSVGs.length) {
+        i = 0;
+    }
+}
