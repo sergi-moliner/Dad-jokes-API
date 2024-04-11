@@ -3,10 +3,33 @@ body {
     background-blend-mode: overlay;
     background-image: url('/svg/back6.svg');
     background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+    body {
+        background-image: url('/svg/back6.svg');
+        background-position: bottom;
+        position: relative;
+        z-index: 0;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    body {
+        background-image: url('/svg/back6.svg');
+        background-position: center;
+        position: relative;
+        z-index: 0;
+    }
 }
 
 .custom-container {
     width: 500px;
+    z-index: 1;
+    position: relative;
+    margin-bottom: 600px;
+
 }
 
 .emoji-btn {

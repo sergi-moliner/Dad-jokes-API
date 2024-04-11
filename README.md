@@ -17,6 +17,16 @@ git clone https://github.com/sergi-moliner/Sprint-4
 
 4. **Start a local development server or open the `index.html` file in a web browser to view the application.**
 
+5. **To edit the code you have to install the necessary Node.js modules, run the following command:**
+
+```bash
+npm i typescript --save-dev
+```
+6. **To compile a TypeScript file, such as index.ts, you can use the TypeScript Compiler (tsc). Run the following command:**
+
+```bash
+tsc index.ts
+```
 
 ## 🚀 Usage
 
@@ -37,4 +47,4 @@ git clone https://github.com/sergi-moliner/Sprint-4
 
 - HTML
 - CSS (Bootstrap for styling)
-- JavaScript
+- TypeScript development
